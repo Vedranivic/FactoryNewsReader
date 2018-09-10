@@ -25,7 +25,6 @@ public class SinglesPagerAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        Log.e("POSITION ADAPTER",":::::::::::\n::::::::::::\n"+String.valueOf(position));
         SingleArticleFragment article = new SingleArticleFragment();
         Bundle bundle = new Bundle();
         bundle.putString("URL",articleURLs[position]);

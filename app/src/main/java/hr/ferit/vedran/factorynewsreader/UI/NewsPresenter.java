@@ -71,7 +71,6 @@ public class NewsPresenter implements NewsPresenterInterface {
                 intent.putExtra("ARTICLE_URLS", articleURLs);
                 intent.putExtra("position", position);
                 context.startActivity(intent);
-                Log.e("POSITION:::::::::::", String.valueOf(position));
             }
         }
     };
