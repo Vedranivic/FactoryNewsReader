@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FactoryNewsReader</string>
+    <string name="MainLabel">Factory News</string>
 </resources>
