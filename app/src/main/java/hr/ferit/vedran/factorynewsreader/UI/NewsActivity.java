@@ -1,5 +1,7 @@
 package hr.ferit.vedran.factorynewsreader.UI;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import butterknife.ButterKnife;
 import hr.ferit.vedran.factorynewsreader.Adapter.FeedAdapter;
 import hr.ferit.vedran.factorynewsreader.Model.Feed;
 import hr.ferit.vedran.factorynewsreader.R;
+import okhttp3.Cache;
 
 public class NewsActivity extends AppCompatActivity implements NewsActivityInterface {
 
@@ -33,7 +36,7 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
     }
 
     private void setupMVP() {
-        presenter = new NewsPresenter(this);
+        presenter = new NewsPresenter(this, this.getApplicationContext());
     }
 
     private void setupViews(){
@@ -42,11 +45,6 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
 
     private void getNewsFeed() {
         presenter.getFeed();
-    }
-
-    @Override
-    public void showToast(String str) {
-        Toast.makeText(NewsActivity.this,str,Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -62,6 +60,17 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
 
     @Override
     public void displayError(String e) {
-        showToast(e);
+        Log.e("ERROR:", e);
+        AlertDialog error = new AlertDialog.Builder(this)
+                .setTitle("Greška")
+                .setMessage("Ups. Došlo je do pogreške")
+                .setNegativeButton("U redu", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        error.show();
     }
 }
