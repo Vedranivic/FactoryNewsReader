@@ -25,17 +25,19 @@ import hr.ferit.vedran.factorynewsreader.R;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
     private List<Article> newsFeed;
-    Context context;
+    private Context context;
+    private ArticleClickCallback clickCallback;
 
-    public FeedAdapter(List<Article> newsFeed, Context context) {
+    public FeedAdapter(List<Article> newsFeed, Context context, ArticleClickCallback clickCallback) {
         this.newsFeed = newsFeed;
         this.context = context;
+        this.clickCallback = clickCallback;
     }
 
     @Override
     public FeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.news_item,parent,false);
-        FeedViewHolder holder = new FeedViewHolder(v);
+        FeedViewHolder holder = new FeedViewHolder(v,clickCallback);
         return holder;
     }
 
@@ -68,9 +70,20 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         @BindView(R.id.image)
         ImageView ivImage;
 
-        public FeedViewHolder(View v) {
-            super(v);
-            ButterKnife.bind(this,v);
+        public FeedViewHolder(View article, final ArticleClickCallback clickCallback) {
+            super(article);
+            ButterKnife.bind(this,article);
+            article.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    clickCallback.onClick(newsFeed.get(getAdapterPosition()), getAdapterPosition());
+                }
+            });
         }
     }
+
+    public interface ArticleClickCallback {
+        void onClick(Article article, int position);
+    }
+
 }

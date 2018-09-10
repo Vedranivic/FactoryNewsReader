@@ -1,6 +1,7 @@
 package hr.ferit.vedran.factorynewsreader.UI;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.ferit.vedran.factorynewsreader.Adapter.FeedAdapter;
+import hr.ferit.vedran.factorynewsreader.Model.Article;
 import hr.ferit.vedran.factorynewsreader.Model.Feed;
 import hr.ferit.vedran.factorynewsreader.R;
 import okhttp3.Cache;
@@ -47,13 +49,15 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
         presenter.getFeed();
     }
 
+
+
     @Override
-    public void displayArticles(Feed newsfeed) {
+    public void displayArticles(Feed newsfeed, FeedAdapter.ArticleClickCallback clickCallback) {
         if(newsfeed!=null) {
-            Log.d("NewsActivity success",newsfeed.getArticles().get(1).getTitle());
-            adapter = new FeedAdapter(newsfeed.getArticles(), NewsActivity.this);
+            adapter = new FeedAdapter(newsfeed.getArticles(), NewsActivity.this, clickCallback);
             rvFeed.setAdapter(adapter);
-        }else{
+        }
+        else{
             Log.d("NewsActivity error","Movies response null");
         }
     }
