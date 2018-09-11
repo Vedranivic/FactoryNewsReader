@@ -45,7 +45,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     public void onBindViewHolder(FeedAdapter.FeedViewHolder holder, int position) {
         Article article = this.newsFeed.get(position);
         holder.tvTitle.setText(article.getTitle());
-        holder.tvDescription.setText(article.getDescription());
         Picasso.get()
                 .load(article.getUrlToImage())
                 .fit()
@@ -65,8 +64,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         @BindView(R.id.title)
         TextView tvTitle;
-        @BindView(R.id.description)
-        TextView tvDescription;
         @BindView(R.id.image)
         ImageView ivImage;
 

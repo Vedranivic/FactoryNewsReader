@@ -8,7 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,6 +26,9 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
 
     @BindView(R.id.rvFeed)
     RecyclerView rvFeed;
+
+    @BindView(R.id.pbLoader)
+    ProgressBar pbLoader;
 
     RecyclerView.Adapter adapter;
     NewsPresenter presenter;
@@ -46,6 +53,7 @@ public class NewsActivity extends AppCompatActivity implements NewsActivityInter
     }
 
     private void getNewsFeed() {
+        pbLoader.setVisibility(View.VISIBLE);
         presenter.getFeed();
     }
 
