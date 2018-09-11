@@ -12,8 +12,11 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.net.ConnectException;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.ferit.vedran.factorynewsreader.Networking.Utils;
 import hr.ferit.vedran.factorynewsreader.R;
 
 
@@ -41,7 +44,12 @@ public class SingleArticleFragment extends Fragment {
         articleView.getSettings().setJavaScriptEnabled(true);
         articleView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         try {
-            articleView.loadUrl(getArguments().getString("URL"));
+            if(Utils.IsNetworkConnected(getActivity())) {
+                articleView.loadUrl(getArguments().getString("URL"));
+            }
+            else {
+                displayError("No internet connection");
+            }
         }
         catch(Exception e){
             displayError(e.getMessage());
